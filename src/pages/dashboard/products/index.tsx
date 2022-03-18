@@ -66,8 +66,10 @@ export default function Products() {
         <FormData showNotification={showNotification} afterFormSubmitted={afterFormSubmitted} />
       </Modal>
       <div className="lg:flex lg:items-center lg:justify-between mb-4">
-        <div className="flex-1 min-w-0">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Product List</h2>
+        <div className="flex-1 min-w-0 ">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate dark:text-gray-400">
+            Product List
+          </h2>
         </div>
         <div className="mt-5 flex lg:mt-0 lg:ml-4">
           <span className="sm:ml-3">
@@ -132,7 +134,7 @@ export default function Products() {
             total={products.length}
           >
             <div>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-400">
                 Showing <span className="font-medium">{paginationInfo.from}</span> to{' '}
                 <span className="font-medium">{paginationInfo.to}</span> of{' '}
                 <span className="font-medium">{paginationInfo.total}</span> results
@@ -142,31 +144,31 @@ export default function Products() {
         )}
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+            <div className="shadow overflow-hidden border-b border-gray-200 rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+                <thead className="bg-gray-50 dark:bg-gray-700">
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-white"
                     >
                       Name
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-white"
                     >
                       Category
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-white"
                     >
                       Price
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-white"
                     >
                       ID
                     </th>
@@ -178,9 +180,9 @@ export default function Products() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-700 dark:divide-gray-600">
                   {loading ? (
-                    <RowSkeleton rowCount={PRODUCTS_LIMIT || 5} colCount={5} />
+                    <RowSkeleton rowCount={PRODUCTS_LIMIT || 5} colCount={6} />
                   ) : (
                     products.slice(offset, offset + PRODUCTS_LIMIT).map((product: Product) => (
                       <tr key={`Product-item-${product.id}`}>
@@ -190,24 +192,26 @@ export default function Products() {
                               <img className="h-10 w-10 rounded-full" src={product.images[0]} onError={imageNotFound} />
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{product.title}</div>
+                              <div className="text-sm font-medium text-gray-900 dark:text-gray-400">
+                                {product.title}
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{product.category.name}</div>
+                          <div className="text-sm text-gray-900 dark:text-gray-400">{product.category.name}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">$ {product.price}</div>
+                          <div className="text-sm text-gray-900 dark:text-gray-400">$ {product.price}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-indigo-600 dark:text-gray-400">
                             {product.id}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link href={`/dashboard/products/edit/${product.id}`}>
-                            <a className="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            <a className="text-indigo-600 hover:text-indigo-900 dark:hover:text-indigo-800">Edit</a>
                           </Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

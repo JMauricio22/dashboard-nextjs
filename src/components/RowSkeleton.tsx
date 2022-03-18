@@ -12,11 +12,8 @@ export default function RowsSkeleton({ rowCount, colCount }: RowSkeletonProps) {
       {rows.map((val, index) => (
         <tr key={`Row-skeleton-${index}`}>
           {cols.map((value, index) => (
-            <td
-              className="px-6 py-6 whitespace-nowrap"
-              key={`Col-skeleton-${index}`}
-            >
-              <div className="w-24 h-4 bg-gray-200 bg-repeat-y bg-left-top bg-50-200 bg-gradiente-skeleton animate-shink"></div>
+            <td className="px-6 py-6 whitespace-nowrap" key={`Col-skeleton-${index}`}>
+              <div className="w-28 h-2 bg-gray-200 dark:bg-gray-400 bg-repeat-y bg-left-top bg-50-200 bg-gradiente-skeleton animate-shink"></div>
             </td>
           ))}
         </tr>

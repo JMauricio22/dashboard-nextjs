@@ -3,7 +3,7 @@ import Nav from '@common/Nav';
 
 export default function MainLayout({ children }) {
   return (
-    <div className="min-h-full">
+    <div className="min-h-screen dark:bg-gray-800">
       <Header />
       <Nav />
       <main>

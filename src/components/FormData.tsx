@@ -33,21 +33,12 @@ const ValidationSchema = Joi.object({
 });
 
 type FormProductProps = {
-  showNotification(
-    title: string,
-    message: string,
-    icon?: NotificationsIcons,
-    duration?: number
-  );
+  showNotification(title: string, message: string, icon?: NotificationsIcons, duration?: number);
   afterFormSubmitted?();
   product?: FormInputsWithoutImages;
 };
 
-export default function FormProduct({
-  afterFormSubmitted,
-  showNotification,
-  product,
-}: FormProductProps) {
+export default function FormProduct({ afterFormSubmitted, showNotification, product }: FormProductProps) {
   const formRef = useRef(null);
   const {
     register,
@@ -79,10 +70,7 @@ export default function FormProduct({
       ...body,
       images: [body.images[0].name],
     });
-    showNotification(
-      'Succesfully updated!',
-      'Product was succesfully updated.'
-    );
+    showNotification('Succesfully updated!', 'Product was succesfully updated.');
     router.push('/dashboard/products');
   };
 
@@ -103,13 +91,10 @@ export default function FormProduct({
   return (
     <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
       <div className="overflow-hidden">
-        <div className="px-4 py-5 bg-white sm:p-6">
+        <div className="px-4 py-5 bg-white sm:p-6 dark:bg-gray-700/10 max-w-xl mx-auto rounded-xl shadow-xl">
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6 sm:col-span-3">
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                 Title
               </label>
               <input
@@ -121,20 +106,15 @@ export default function FormProduct({
                     block w-full shadow-sm 
                     sm:text-sm border-gray-300 
                     rounded-md
+                    dark:bg-gray-800
+                    dark:text-gray-400
                     ${errors.title && 'border-red-300'}`}
                 {...register('title')}
               />
-              {errors.title && (
-                <span className="text-red-400 font-thin text-sm">
-                  {errors.title.message}
-                </span>
-              )}
+              {errors.title && <span className="text-red-400 font-thin text-sm">{errors.title.message}</span>}
             </div>
             <div className="col-span-6 sm:col-span-3">
-              <label
-                htmlFor="price"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                 Price
               </label>
               <input
@@ -146,26 +126,22 @@ export default function FormProduct({
                     focus:border-indigo-500 
                     block w-full shadow-sm sm:text-sm 
                     border-gray-300 rounded-md 
+                    dark:bg-gray-800
+                    dark:text-gray-400
                     ${errors.price && 'border-red-300'}`}
               />
-              {errors.price && (
-                <span className="text-red-400 font-thin text-sm">
-                  {errors.price.message}
-                </span>
-              )}
+              {errors.price && <span className="text-red-400 font-thin text-sm">{errors.price.message}</span>}
             </div>
             <div className="col-span-6">
-              <label
-                htmlFor="category"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                 Category
               </label>
               <select
                 id="category"
                 {...register('categoryId')}
                 autoComplete="category-name"
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm     dark:bg-gray-800
+                dark:text-gray-400"
               >
                 <option value="1">Clothes</option>
                 <option value="2">Electronics</option>
@@ -176,10 +152,7 @@ export default function FormProduct({
             </div>
 
             <div className="col-span-6">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
                 Description
               </label>
               <textarea
@@ -188,24 +161,22 @@ export default function FormProduct({
                 autoComplete="description"
                 rows={3}
                 className={`form-textarea
-                     mt-1 block w-full mt-1 
+                     mt-1 block w-full
                      focus:ring-indigo-500 
-                     focus:border-indigo-500 block w-full 
+                     focus:border-indigo-500
                      shadow-sm sm:text-sm 
                      border-gray-300 rounded-md
+                     dark:bg-gray-800
+                     dark:text-gray-400
                      ${errors.description && 'border-red-300'}`}
               />
               {errors.description && (
-                <span className="text-red-400 font-thin text-sm">
-                  {errors.description.message}
-                </span>
+                <span className="text-red-400 font-thin text-sm">{errors.description.message}</span>
               )}
             </div>
             <div className="col-span-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Cover photo
-                </label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-400">Cover photo</label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   <div className="space-y-1 text-center">
                     <svg
@@ -225,33 +196,33 @@ export default function FormProduct({
                     <div className="flex text-sm text-gray-600">
                       <label
                         htmlFor="images"
-                        className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                        className={`
+                        relative cursor-pointer
+                        bg-white rounded-md font-medium
+                         text-indigo-600 hover:text-indigo-500
+                          focus-within:outline-none focus-within:ring-2
+                          focus-within:ring-offset-2 focus-within:ring-indigo-500
+                            dark:focus-within:ring-0
+                            dark:focus-within:ring-offset-0
+                           dark:bg-gray-800 dark:text-gray-400
+                        `}
                       >
                         <span>Upload a file</span>
-                        <input
-                          id="images"
-                          {...register('images')}
-                          type="file"
-                          className="sr-only"
-                        />
+                        <input id="images" {...register('images')} type="file" className="sr-only" />
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-gray-500">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
+                    <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                   </div>
                 </div>
                 {errors.images && (
-                  <span className="text-red-400 font-thin text-sm text-center w-full">
-                    {errors.images.message}
-                  </span>
+                  <span className="text-red-400 font-thin text-sm text-center w-full">{errors.images.message}</span>
                 )}
               </div>
             </div>
           </div>
         </div>
-        <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <div className="px-4 py-3 mt-2 bg-gray-50 text-right sm:px-6 dark:bg-gray-800">
           <button
             type="submit"
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
