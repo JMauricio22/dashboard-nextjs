@@ -181,8 +181,8 @@ export default function Header() {
             <Disclosure.Panel className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 {navigation.map((item) => (
-                  <Disclosure.Button as="div">
-                    <Link key={item.name} href={item.href}>
+                  <Disclosure.Button as="div" key={item.name}>
+                    <Link href={item.href}>
                       <a
                         className={classNames(
                           router.route === item.href
@@ -222,13 +222,13 @@ export default function Header() {
                     </div>
                     <div className="mt-3 px-2 space-y-1">
                       {userNavigation.map((item) => {
-                        const props: any = { key: item.name, href: item.href };
+                        const props: any = { href: item.href };
                         if (item.onClick) {
                           props.onClick = item.onClick;
                         }
 
                         return (
-                          <Disclosure.Button as="div">
+                          <Disclosure.Button as="div" key={item.name}>
                             <MenuItemLink
                               {...props}
                               className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"

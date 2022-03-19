@@ -1,19 +1,12 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
-  LineElement,
-  ArcElement,
-} from 'chart.js';
 import { Chart as ReactChartJS } from 'react-chartjs-2';
 import { useTheme } from 'next-themes';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, ArcElement);
+import { Chart, ChartComponentLike } from 'chart.js';
+import * as Chartjs from 'chart.js';
+
+const controllers = Object.values(Chartjs).filter((chart: any) => chart.id !== undefined);
+
+Chart.register(controllers as ChartComponentLike);
 
 type ChartType = 'bar' | 'pie' | 'line' | 'doughnut';
 
