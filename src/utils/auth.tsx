@@ -42,7 +42,6 @@ export default class Auth {
         };
 
     this.user = user;
-    Cookies.set('user', JSON.stringify(user));
 
     return user;
   }
@@ -91,7 +90,6 @@ export default class Auth {
 
   signOut() {
     Cookies.remove('user');
-    Cookies.remove('token');
     this.user = null;
     this.error = null;
     delete axios.defaults.headers['Authorization'];
@@ -105,8 +103,13 @@ export default class Auth {
     const token = Cookies.get('token');
     this.cbLoading(true);
 
+    if (!axios.defaults.headers['Authorization'] && token) {
+      axios.defaults.headers['Authorization'] = `Bearer ${token}`;
+    }
+
     try {
       if (token) {
+        this.cbLoading(true);
         const user = await this.getProfile();
         this.onUserChange(this.user);
       } else {

@@ -25,9 +25,9 @@ const auth = new Auth();
 export const AuthContext = createContext<UseAuth>({} as UseAuth);
 
 export function useProvide() {
-  const [user, setUser] = useState<User | null>({ email: 'john@example.com', name: 'John' });
+  const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<AuthError>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     auth

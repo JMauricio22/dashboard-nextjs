@@ -11,6 +11,9 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   const { user, loading, setRedirect } = useAuth();
   const router = useRouter();
 
+  console.log('loading', loading);
+  console.log('user', user);
+
   useEffect(() => {
     if (!loading) {
       if (!user) {
@@ -18,7 +21,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
         router.push('/login');
       }
     }
-  }, []);
+  }, [loading]);
 
   if (loading) {
     return <Loading />;
