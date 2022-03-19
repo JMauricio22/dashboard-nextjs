@@ -20,6 +20,11 @@ module.exports = {
           },
         },
       },
+      gridTemplateRows: {
+        // Complex site-specific row configuration
+        'dashboard-layout': '180px 220px 220px',
+        'dashboard-layout-sm': '160px 160px 160px 350px 350px 350px',
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],

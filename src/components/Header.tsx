@@ -6,11 +6,26 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import DarkModeButton from '@components/DarkModeButton';
 
-const userData = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+const MenuItemLink = ({
+  key,
+  href,
+  className,
+  children,
+  ...props
+}: {
+  key: string;
+  href: string;
+  className: string;
+  children: JSX.Element | string;
+  props: object;
+}) => {
+  return (
+    <Link href={href} key={key}>
+      <a {...props} className={className}>
+        {children}
+      </a>
+    </Link>
+  );
 };
 
 function classNames(...classes) {
@@ -22,8 +37,8 @@ export default function Header() {
   const router = useRouter();
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', current: true },
-    { name: 'Productos', href: '/dashboard/products', current: false },
+    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Productos', href: '/dashboard/products' },
   ];
 
   const userNavigation = [
@@ -37,8 +52,6 @@ export default function Header() {
       },
     },
   ];
-
-  console.log(user);
 
   return (
     <>
@@ -68,7 +81,6 @@ export default function Header() {
                                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                               'px-3 py-2 rounded-md text-sm font-medium'
                             )}
-                            aria-current={item.current ? 'page' : undefined}
                           >
                             {item.name}
                           </a>
@@ -109,19 +121,25 @@ export default function Header() {
                                 {userNavigation.map((item) => (
                                   <Menu.Item key={item.name}>
                                     {({ active }) => {
-                                      const href = item.href;
-                                      const className = classNames(
-                                        active ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700'
-                                      );
-
-                                      const props: any = { href, className };
+                                      const props: any = {};
 
                                       if (item.onClick) {
                                         props.onClick = item.onClick;
                                       }
 
-                                      return <a {...props}>{item.name}</a>;
+                                      return (
+                                        <Link key={item.name} href={item.href}>
+                                          <a
+                                            {...props}
+                                            className={classNames(
+                                              active ? 'bg-gray-100' : '',
+                                              'block px-4 py-2 text-sm text-gray-700'
+                                            )}
+                                          >
+                                            {item.name}
+                                          </a>
+                                        </Link>
+                                      );
                                     }}
                                   </Menu.Item>
                                 ))}
@@ -163,50 +181,66 @@ export default function Header() {
             <Disclosure.Panel className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                      'block px-3 py-2 rounded-md text-base font-medium'
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    {item.name}
+                  <Disclosure.Button as="div">
+                    <Link key={item.name} href={item.href}>
+                      <a
+                        className={classNames(
+                          router.route === item.href
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          'block px-3 py-2 rounded-md text-base font-medium'
+                        )}
+                      >
+                        {item.name}
+                      </a>
+                    </Link>
                   </Disclosure.Button>
                 ))}
               </div>
               <div className="pt-4 pb-3 border-t border-gray-700">
-                <div className="flex items-center px-5">
-                  <div className="flex-shrink-0">
-                    <img className="h-10 w-10 rounded-full" src={userData.imageUrl} alt="" />
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium leading-none text-white">{userData.name}</div>
-                    <div className="text-sm font-medium leading-none text-gray-400">{userData.email}</div>
-                  </div>
-                  <button
-                    type="button"
-                    className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="mt-3 px-2 space-y-1">
-                  {user &&
-                    userNavigation.map((item) => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                {user && (
+                  <>
+                    <div className="flex items-center px-5">
+                      <div className="flex-shrink-0">
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src={`https://ui-avatars.com/api/?name=${user?.name}`}
+                          alt={user.name}
+                        />
+                      </div>
+                      <div className="ml-3">
+                        <div className="text-base font-medium leading-none text-white">{user.name}</div>
+                        <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                      </div>
+                      <button
+                        type="button"
+                        className="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                       >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
-                </div>
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <div className="mt-3 px-2 space-y-1">
+                      {userNavigation.map((item) => {
+                        const props: any = { key: item.name, href: item.href };
+                        if (item.onClick) {
+                          props.onClick = item.onClick;
+                        }
+
+                        return (
+                          <Disclosure.Button as="div">
+                            <MenuItemLink
+                              {...props}
+                              className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                            >
+                              {item.name}
+                            </MenuItemLink>
+                          </Disclosure.Button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             </Disclosure.Panel>
           </>

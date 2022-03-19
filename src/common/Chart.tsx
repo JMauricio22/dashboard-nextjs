@@ -11,18 +11,9 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Chart as ReactChartJS } from 'react-chartjs-2';
+import { useTheme } from 'next-themes';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
-  LineElement,
-  ArcElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, ArcElement);
 
 type ChartType = 'bar' | 'pie' | 'line' | 'doughnut';
 
@@ -34,23 +25,37 @@ type CharProps = {
   dataOptions?: object;
 };
 
-export default function Char({
-  type,
-  title,
-  data,
-  labels,
-  dataOptions,
-}: CharProps) {
+export default function Char({ type, title, data, labels, dataOptions }: CharProps) {
+  const { theme } = useTheme();
+
+  const fontColor = theme === 'dark' ? 'white' : '#212121';
+
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          color: fontColor,
+        },
       },
       title: {
         display: true,
         text: title,
+        color: fontColor,
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: fontColor,
+        },
+      },
+      y: {
+        ticks: {
+          color: fontColor,
+        },
       },
     },
   };
