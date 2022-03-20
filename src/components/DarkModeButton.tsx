@@ -3,7 +3,7 @@ import { Switch } from '@headlessui/react';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/solid';
 
-const DarkModeButton = () => {
+function DarkModeButton() {
   const { theme, setTheme } = useTheme();
   const [enabled, setEnabled] = useState(false);
 
@@ -13,7 +13,7 @@ const DarkModeButton = () => {
   };
 
   useEffect(() => {
-    setEnabled(theme === 'dark' ? true : false);
+    setEnabled(theme === 'dark');
   }, []);
 
   return (
@@ -29,7 +29,7 @@ const DarkModeButton = () => {
         className={`transform transition ease-in-out duration-200 z-20 ${
           enabled ? 'translate-x-9 bg-gray-500' : 'translate-x-1 bg-white'
         } inline-block w-6 h-6 transform rounded-full`}
-      ></span>
+       />
 
       {theme === 'dark' ? (
         <span
@@ -52,6 +52,6 @@ const DarkModeButton = () => {
       )}
     </Switch>
   );
-};
+}
 
 export default DarkModeButton;

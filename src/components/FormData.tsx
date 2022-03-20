@@ -15,7 +15,7 @@ const ValidationSchema = Joi.object({
   categoryId: Joi.string().valid('1', '2', '3', '4', '5').required(),
   description: Joi.string().required(),
   images: Joi.any()
-    .custom(function (file, { error }) {
+    .custom((file, { error }) => {
       if (!file[0]) {
         return error('file.required');
       }
@@ -76,7 +76,7 @@ export default function FormProduct({ afterFormSubmitted, showNotification, prod
 
   const onSubmit = async (body: FormInputs) => {
     try {
-      const isEdit = product ? true : false;
+      const isEdit = !!product;
       if (isEdit) {
         editProduct((product as FormInputsWithoutImages).id, body);
       } else {

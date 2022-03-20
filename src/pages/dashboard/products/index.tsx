@@ -1,25 +1,20 @@
-import { Fragment, SyntheticEvent, useState } from 'react';
+import { SyntheticEvent } from 'react';
 import useFetch from '@hooks/useFetch';
 import endPoints from '@services/api';
 import Product from '@customTypes/product';
 import Pagination from '@components/Pagination';
 import RowSkeleton from '@components/RowSkeleton';
 import axios from 'axios';
-import { ChevronDownIcon, PlusIcon, TrashIcon } from '@heroicons/react/solid';
-import { Menu, Transition } from '@headlessui/react';
+import { PlusIcon, TrashIcon } from '@heroicons/react/solid';
 import Modal from '@common/Modal';
 import FormData from '@components/FormData';
 import Notification from '@components/Notification';
 import useModal from '@hooks/useModal';
-import useNotification from '@hooks/useNotification';
+import useNotification, { NotificationsIcons } from '@hooks/useNotification';
 import { deleteProduct } from '@services/api/products';
-import { NotificationsIcons } from '@hooks/useNotification';
 import Link from 'next/link';
+import Image from 'next/image';
 import usePagination from '@hooks/usePagination';
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
 
 const PRODUCTS_LIMIT = 9;
 const PAGINATION_SIZE = 5;
@@ -49,7 +44,6 @@ export default function Products() {
       setLoading(true);
       onChangePageHandler(1);
     } catch (error: any) {
-      console.log(error);
       showNotification('Error!', error.message, NotificationsIcons.error);
     }
   };
@@ -149,7 +143,13 @@ export default function Products() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
-                              <img className="h-10 w-10 rounded-full" src={product.images[0]} onError={imageNotFound} />
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                className="h-10 w-10 rounded-full relative overflow-hidden"
+                                src={product.images[0]}
+                                onError={imageNotFound}
+                                alt={product.title}
+                              />
                             </div>
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900 dark:text-gray-400">

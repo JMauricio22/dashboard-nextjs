@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/outline';
+import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import clsx from 'clsx';
 
 export enum NotificationsIcons {
@@ -11,17 +8,11 @@ export enum NotificationsIcons {
 }
 
 const icons = {
-  [NotificationsIcons.success]: (props) => (
-    <CheckCircleIcon
-      {...props}
-      className={clsx(props.className, 'text-green-400')}
-    />
+  [NotificationsIcons.success]: ({ className, ...props }) => (
+    <CheckCircleIcon {...props} className={clsx(className, 'text-green-400')} />
   ),
-  [NotificationsIcons.error]: (props) => (
-    <ExclamationCircleIcon
-      {...props}
-      className={clsx(props.className, 'text-red-400')}
-    />
+  [NotificationsIcons.error]: ({ className, ...props }) => (
+    <ExclamationCircleIcon {...props} className={clsx(className, 'text-red-400')} />
   ),
 };
 
@@ -44,15 +35,7 @@ const defaultState = {
 export default function useNotification() {
   const [notification, setNotification] = useState<Notification>(defaultState);
 
-  const showNotification = (
-    title: string,
-    message: string,
-    iconType?: NotificationsIcons,
-    duration?: number
-  ) => {
-    iconType = iconType || NotificationsIcons.success;
-    duration = duration || 3000;
-
+  const showNotification = (title: string, message: string, iconType = NotificationsIcons.success, duration = 3000) => {
     setNotification({
       open: true,
       title,

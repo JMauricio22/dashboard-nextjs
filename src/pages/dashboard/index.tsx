@@ -1,4 +1,4 @@
-import { CashIcon, ArrowUpIcon } from '@heroicons/react/solid';
+import { ArrowUpIcon } from '@heroicons/react/solid';
 import useFetch from '@hooks/useFetch';
 import endPoints from '@services/api';
 import Product from '@customTypes/product';
@@ -62,7 +62,10 @@ export default function Dashboard() {
     !loading && (
       <div className="w-full grid pb-4 xl:grid-rows-dashboard-layout md:grid-rows-dashboard-layout xl:grid-cols-3 md:grid-cols-6 grid-rows-dashboard-layout-sm grid-cols-1 place-items-center gap-4">
         {dashboardItems.map((item) => (
-          <div key={`Dashboard-item-${item.title}`} className="w-full max-w-full xl:col-span-1 md:col-span-2 h-40 dark:bg-gray-700 bg-white shadow-md rounded-lg flex items-center justify-center">
+          <div
+            key={`Dashboard-item-${item.title}`}
+            className="w-full max-w-full xl:col-span-1 md:col-span-2 h-40 dark:bg-gray-700 bg-white shadow-md rounded-lg flex items-center justify-center"
+          >
             {/* <div className="flex items-center"> */}
             <div className="flex flex-col items-center justify-start mr-5">
               <span className="lg:text-lg md:text-sm text-lg text-gray-300 dark:text-gray-400 font-semibold">

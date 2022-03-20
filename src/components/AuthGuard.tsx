@@ -7,12 +7,9 @@ type AuthGuardProps = {
   children: JSX.Element;
 };
 
-const AuthGuard = ({ children }: AuthGuardProps) => {
+function AuthGuard({ children }: AuthGuardProps) {
   const { user, loading, setRedirect } = useAuth();
   const router = useRouter();
-
-  console.log('loading', loading);
-  console.log('user', user);
 
   useEffect(() => {
     if (!loading) {
@@ -28,10 +25,11 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   }
 
   if (!loading && user) {
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <>{children}</>;
   }
 
   return null;
-};
+}
 
 export default AuthGuard;

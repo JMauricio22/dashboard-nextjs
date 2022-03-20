@@ -4,9 +4,7 @@ export default function usePagination(size: number, limit: number, total: number
   const [section, setSection] = useState(1);
   const [page, setPage] = useState(1);
 
-  const items = useMemo(() => {
-    return [...new Array(size)].map((v, i) => i + 1 + size * (section - 1));
-  }, [size, section]);
+  const items = useMemo(() => [...new Array(size)].map((v, i) => i + 1 + size * (section - 1)), [size, section]);
 
   const onChangePageHandler = (newPage) => {
     if (newPage === 1) {

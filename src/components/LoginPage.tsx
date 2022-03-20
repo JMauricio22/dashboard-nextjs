@@ -3,7 +3,9 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import { Transition } from '@headlessui/react';
 import { useAuth } from '@hooks/useAuth';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import Loading from '@common/Loading';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [form, setForm] = useState({
@@ -23,8 +25,8 @@ export default function LoginPage() {
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const email = form.email;
-    const password = form.password;
+    const { email } = form;
+    const { password } = form;
     await auth.signIn(email, password);
   };
 
@@ -36,8 +38,6 @@ export default function LoginPage() {
     }
   }, [user]);
 
-  console.log(error);
-
   const onLoading = () => loading && <Loading />;
 
   const onRender = () =>
@@ -45,17 +45,15 @@ export default function LoginPage() {
       <div className="w-full min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
+            <div className="mx-auto h-12 w-auto relative">
+              <Image src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" layout="fill" alt="Workflow" />
+            </div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-400">
               Sign in to your account
             </h2>
           </div>
           <Transition
-            show={error ? true : false}
+            show={!!error}
             enter="transition-opacity transition-duration-75"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -143,9 +141,9 @@ export default function LoginPage() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
-                </a>
+                <Link href="/">
+                  <a className="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+                </Link>
               </div>
             </div>
 

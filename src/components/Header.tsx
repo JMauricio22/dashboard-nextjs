@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @next/next/no-img-element */
+
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
@@ -6,7 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import DarkModeButton from '@components/DarkModeButton';
 
-const MenuItemLink = ({
+function MenuItemLink({
   key,
   href,
   className,
@@ -18,7 +21,7 @@ const MenuItemLink = ({
   className: string;
   children: JSX.Element | string;
   props: object;
-}) => {
+}) {
   return (
     <Link href={href} key={key}>
       <a {...props} className={className}>
@@ -26,7 +29,7 @@ const MenuItemLink = ({
       </a>
     </Link>
   );
-};
+}
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -54,7 +57,6 @@ export default function Header() {
   ];
 
   return (
-    <>
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>
@@ -91,8 +93,7 @@ export default function Header() {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <>
-                      <DarkModeButton />
+                    <DarkModeButton />
                       {/* DARKMODE BUTTON */}
                       {user ? (
                         <>
@@ -151,7 +152,7 @@ export default function Header() {
                         <Link href="/login">
                           <a
                             className={classNames(
-                              '/login' === router.pathname
+                              router.pathname === '/login'
                                 ? 'bg-gray-900 text-white'
                                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                               'px-3 py-2 rounded-md text-sm font-medium'
@@ -161,7 +162,6 @@ export default function Header() {
                           </a>
                         </Link>
                       )}
-                    </>
                   </div>
                 </div>
                 <div className="-mr-2 flex md:hidden">
@@ -246,6 +246,6 @@ export default function Header() {
           </>
         )}
       </Disclosure>
-    </>
+    
   );
 }

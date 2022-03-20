@@ -10,7 +10,7 @@ export default function useFetch<T>(endPoint) {
       const resp: AxiosResponse = await axios.get(endPoint);
       setData(resp.data);
     } catch (error) {
-      console.log(error);
+      /*  */
     } finally {
       setLoading(false);
     }

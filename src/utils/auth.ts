@@ -1,7 +1,8 @@
+/* eslint-disable camelcase */
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { User, AuthError, UserStateChangedCallback, AuthLoadingCallback } from '@customTypes/user/auth';
-import endPoints from '../services/api';
 import Cookies from 'js-cookie';
+import endPoints from '@services/api';
 
 const USER_EMAIL = 'john@mail.com';
 const USER_NAME = 'John';
@@ -14,8 +15,11 @@ class AuthConfigError extends Error {
 
 export default class Auth {
   user: User;
+
   error: AuthError;
+
   cb: UserStateChangedCallback;
+
   cbLoading: AuthLoadingCallback;
 
   onAuthStateChanged(cb: UserStateChangedCallback) {
@@ -29,17 +33,17 @@ export default class Auth {
   }
 
   private onUserChange(user: User | null, error: AuthError = null) {
-    this.cb && this.cb(user, error);
+    if (this.cb) {
+      this.cb(user, error);
+    }
   }
 
   private async getProfile(): Promise<User> {
     const { data }: AxiosResponse = await axios.get('https://api.escuelajs.co/api/v1/auth/profile');
-    const user = data
-      ? data
-      : {
-          email: USER_EMAIL,
-          name: USER_NAME,
-        };
+    const user = data || {
+      email: USER_EMAIL,
+      name: USER_NAME,
+    };
 
     this.user = user;
 
@@ -72,7 +76,7 @@ export default class Auth {
         Cookies.set('token', token, {
           expires: 1,
         });
-        axios.defaults.headers['Authorization'] = `Bearer ${token}`;
+        (axios.defaults.headers as any).Authorization = `Bearer ${token}`;
 
         await this.getProfile();
       }
@@ -89,10 +93,10 @@ export default class Auth {
   }
 
   signOut() {
-    Cookies.remove('user');
+    Cookies.remove('token');
     this.user = null;
     this.error = null;
-    delete axios.defaults.headers['Authorization'];
+    delete (axios.defaults.headers as any).Authorization;
     this.onUserChange(this.user, this.error);
   }
 
@@ -103,14 +107,14 @@ export default class Auth {
     const token = Cookies.get('token');
     this.cbLoading(true);
 
-    if (!axios.defaults.headers['Authorization'] && token) {
-      axios.defaults.headers['Authorization'] = `Bearer ${token}`;
+    if (!(axios.defaults.headers as any).Authorization && token) {
+      (axios.defaults.headers as any).Authorization = `Bearer ${token}`;
     }
 
     try {
       if (token) {
         this.cbLoading(true);
-        const user = await this.getProfile();
+        await this.getProfile();
         this.onUserChange(this.user);
       } else {
         this.user = null;
