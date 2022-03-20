@@ -31,7 +31,7 @@ Product Dashboard showing a list of products and graphics.
 - [Typescript](https://www.typescriptlang.org/)
 
 ## Deploy
-[Web site 🚀](https://dashboard-nextjs-red.vercel.app/)
+[Web site 🚀](dashboard-nextjs-13p6rj7a1-jmauricio22.vercel.app)
 
 ## Features
 
